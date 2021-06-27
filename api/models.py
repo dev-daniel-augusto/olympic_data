@@ -21,6 +21,28 @@ class Team(Core):
         return self.team_name
 
 
+class Sport(Core):
+    sport_name = models.CharField(max_length=200, unique=True)
+
+    class Meta:
+        verbose_name = 'Sport'
+        verbose_name_plural = 'Sport'
+
+    def __str__(self):
+        return self.sport_name
+
+
+class Event(Core):
+    event_name = models.CharField(max_length=255, unique=True)
+
+    class Meta:
+        verbose_name = 'Event'
+        verbose_name_plural = 'Events'
+
+    def __str__(self):
+        return self.event_name
+
+
 class Athlete(Core):
     name = models.CharField(max_length=250, unique=True)
     sex = models.CharField(max_length=1)
