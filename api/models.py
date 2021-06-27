@@ -74,3 +74,16 @@ class Game(Core):
 
     def __str__(self):
         return str(self.event)
+
+
+class Medal(Core):
+    medal = models.CharField(max_length=6, blank=True)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    winner = models.ForeignKey(Athlete, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Medal'
+        verbose_name_plural = 'Medals'
+
+    def __str__(self):
+        return self.medal
