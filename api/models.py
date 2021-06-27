@@ -19,3 +19,19 @@ class Team(Core):
 
     def __str__(self):
         return self.team_name
+
+
+class Athlete(Core):
+    name = models.CharField(max_length=250, unique=True)
+    sex = models.CharField(max_length=1)
+    age = models.IntegerField(default=0)
+    height = models.FloatField()
+    weight = models.FloatField()
+    athlete_team = models.ForeignKey(Team, on_delete=models.CASCADE)
+
+    class Meta:
+        verbose_name = 'Athlete'
+        verbose_name_plural = 'Athletes'
+
+    def __str__(self):
+        return self.name
