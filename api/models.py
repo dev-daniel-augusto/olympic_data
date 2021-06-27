@@ -57,3 +57,20 @@ class Athlete(Core):
 
     def __str__(self):
         return self.name
+
+
+class Game(Core):
+    year = models.IntegerField()
+    season = models.CharField(max_length=6)
+    city = models.CharField(max_length=250)
+    sport = models.ForeignKey(Sport, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, on_delete=models.CASCADE)
+    athletes = models.ManyToManyField(Athlete)
+
+    class Meta:
+        verbose_name = 'Game'
+        verbose_name_plural = 'Games'
+        unique_together = ['year', 'season', 'event']
+
+    def __str__(self):
+        return str(self.event)
