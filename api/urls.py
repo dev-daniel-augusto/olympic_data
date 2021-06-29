@@ -11,9 +11,9 @@ from .views import (
 
 
 router = SimpleRouter()
-router.register('teams', TeamViewSet)
-router.register('sport', SportViewSet)
-router.register('events', EventViewSet)
-router.register('athletes', AthleteViewSet)
-router.register('games', GameViewSet)
-router.register('medals', MedalViewSet)
+router.register('teams', TeamViewSet, basename='teams')
+router.register('sport', SportViewSet, basename='sport')
+router.register('events', EventViewSet, basename='events')
+router.register('athletes', AthleteViewSet, basename='athletes')
+router.register('games', GameViewSet, basename='games')
+router.register('medals', MedalViewSet, basename='medals')
