@@ -49,7 +49,7 @@ class Athlete(Core):
     age = models.IntegerField(default=0)
     height = models.FloatField()
     weight = models.FloatField()
-    athlete_team = models.ForeignKey(Team, on_delete=models.CASCADE)
+    athlete_team = models.ForeignKey(Team, related_name='athletes', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Athlete'
@@ -63,9 +63,9 @@ class Game(Core):
     year = models.IntegerField()
     season = models.CharField(max_length=6)
     city = models.CharField(max_length=250)
-    sport = models.ForeignKey(Sport, on_delete=models.CASCADE)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    athletes = models.ManyToManyField(Athlete)
+    sport = models.ForeignKey(Sport, related_name='events', on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, related_name='games', on_delete=models.CASCADE)
+    athletes = models.ManyToManyField(Athlete, related_name='participation')
 
     class Meta:
         verbose_name = 'Game'
@@ -78,8 +78,8 @@ class Game(Core):
 
 class Medal(Core):
     medal = models.CharField(max_length=6, blank=True)
-    event = models.ForeignKey(Event, on_delete=models.CASCADE)
-    winner = models.ForeignKey(Athlete, on_delete=models.CASCADE)
+    event = models.ForeignKey(Event, related_name='medals', on_delete=models.CASCADE)
+    winner = models.ForeignKey(Athlete, related_name='winners', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Medal'
