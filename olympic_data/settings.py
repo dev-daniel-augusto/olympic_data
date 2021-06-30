@@ -26,8 +26,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
 
-    'rest_framework',
     'django_filters',
+    'rest_framework',
+    'rest_framework.authtoken',
 
     'api',
 ]
@@ -68,12 +69,12 @@ WSGI_APPLICATION = 'olympic_data.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
+        'ENGINE': 'django.db.backends.postgresql',
         'NAME': '',
         'USER': '',
         'PASSWORD': '',
         'HOST': 'localhost',
-        'PORT': '3306',
+        'PORT': '5432',
     }
 }
 
@@ -126,6 +127,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ),
     'DEFAULT_PERMISSION_CLASSES': (
