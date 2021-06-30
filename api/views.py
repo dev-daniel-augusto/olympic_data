@@ -1,3 +1,5 @@
+from rest_framework.response import Response
+from rest_framework.decorators import action
 from rest_framework import viewsets
 
 from django_filters.rest_framework import DjangoFilterBackend
@@ -31,6 +33,12 @@ class TeamViewSet(viewsets.ModelViewSet):
         'created',
     )
 
+    @action(detail=True, methods=['get', 'post', 'delete'])
+    def athletes(self, request, pk=None):
+        team = self.get_object()
+        serializer_athletes = AthleteSerializer(team.athletes.all(), many=True)
+        return Response(serializer_athletes.data)
+
 
 class SportViewSet(viewsets.ModelViewSet):
     queryset = Sport.objects.all()
@@ -41,6 +49,12 @@ class SportViewSet(viewsets.ModelViewSet):
         'created',
     )
 
+    @action(detail=True, methods=['get', 'post', 'delete'])
+    def events(self, request, pk=None):
+        sport = self.get_object()
+        serializer_events = GameSerializer(sport.events.all(), many=True)
+        return Response(serializer_events.data)
+
 
 class EventViewSet(viewsets.ModelViewSet):
     queryset = Event.objects.all()
@@ -50,6 +64,18 @@ class EventViewSet(viewsets.ModelViewSet):
         'event_name',
         'created',
     )
+
+    @action(detail=True, methods=['get', 'post', 'delete'])
+    def medals(self, request, pk=None):
+        event = self.get_object()
+        serializer_medals = MedalSerializer(event.medals.all(), many=True)
+        return Response(serializer_medals.data)
+
+    @action(detail=True, methods=['get', 'post', 'delete'])
+    def games(self, request, pk=None):
+        event = self.get_object()
+        serializer_games = GameSerializer(event.games.all(), many=True)
+        return Response(serializer_games.data)
 
 
 class AthleteViewSet(viewsets.ModelViewSet):
@@ -65,6 +91,18 @@ class AthleteViewSet(viewsets.ModelViewSet):
         'athlete_team',
         'created',
     )
+
+    @action(detail=True, methods=['get', 'posts'])
+    def achievements(self, request, pk=None):
+        athlete = self.get_object()
+        serializer_winners = MedalSerializer(athlete.winners.all(), many=True)
+        return Response(serializer_winners.data)
+
+    @action(detail=True, methods=['get', 'posts'])
+    def games(self, request, pk=None):
+        athlete = self.get_object()
+        serializer_games = GameSerializer(athlete.participation.all(), many=True)
+        return Response(serializer_games.data)
 
 
 class GameViewSet(viewsets.ModelViewSet):
